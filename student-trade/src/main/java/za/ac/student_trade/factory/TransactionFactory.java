@@ -1,4 +1,4 @@
 package za.ac.student_trade.factory;
 
-public class ProductsFactory {
+public class TransactionFactory {
 }

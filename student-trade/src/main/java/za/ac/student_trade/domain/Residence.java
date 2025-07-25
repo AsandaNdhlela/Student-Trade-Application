@@ -6,7 +6,6 @@ import jakarta.persistence.*;
 @Table(name ="residence")
 public class Residence {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     protected Long residenceId;
 
     @Column(name = "residence_name")
@@ -18,6 +17,10 @@ public class Residence {
     @Column(name = "building")
     protected String buildingName;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "address_id")
+    protected Address address;
+
     protected Residence() {}
 
     protected Residence(Builder builder) {
@@ -26,6 +29,7 @@ public class Residence {
         this.roomNumber = builder.roomNumber;
         this.floorNumber = builder.floorNumber;
         this.buildingName = builder.buildingName;
+        this.address = builder.address;
     }
 
     public Long getResidenceId() {
@@ -48,6 +52,10 @@ public class Residence {
         return buildingName;
     }
 
+    public Address getAddress() {
+        return address;
+    }
+
     @Override
     public String toString() {
         return "Residence{" +
@@ -56,6 +64,7 @@ public class Residence {
                 ", roomNumber='" + roomNumber + '\'' +
                 ", floorNumber=" + floorNumber +
                 ", buildingName='" + buildingName + '\'' +
+                ", address=" + address +
                 '}';
     }
 
@@ -65,6 +74,7 @@ public class Residence {
         private String roomNumber;
         private int floorNumber;
         private String buildingName;
+        private Address address;
 
         public Builder setResidenceId(Long residenceId) {
             this.residenceId = residenceId;
@@ -91,12 +101,18 @@ public class Residence {
             return this;
         }
 
+        public Builder setAddress(Address address) {
+            this.address = address;
+            return this;
+        }
+
         public Builder builder(Residence residence) {
             this.residenceId = residence.getResidenceId();
             this.residenceName = residence.getResidenceName();
             this.roomNumber = residence.getRoomNumber();
             this.floorNumber = residence.getFloorNumber();
             this.buildingName = residence.getBuildingName();
+            this.address = residence.address;
             return this;
         }
 
@@ -106,6 +122,7 @@ public class Residence {
             this.roomNumber = residence.getRoomNumber();
             this.floorNumber = residence.getFloorNumber();
             this.buildingName = residence.getBuildingName();
+            this.address = residence.address;
             return this;
         }
 

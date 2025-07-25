@@ -7,16 +7,16 @@ import za.ac.student_trade.util.Helper;
 import java.util.Random;
 
 public class ResidenceFactory {
-    public static Residence createResidence(String residenceName, String roomNumber, int floorNumber, String buildingName) {
+    public static Residence createResidence(String residenceName, String roomNumber, int floorNumber, String buildingName, Address address) {
 
-        Long residenceId = Long.valueOf(Helper.generateId());
-
+        Long residenceId = new Random().nextLong();
         return new Residence.Builder()
                 .setResidenceId(residenceId)
                 .setResidenceName(residenceName)
                 .setRoomNumber(roomNumber)
                 .setFloorNumber(floorNumber)
                 .setBuildingName(buildingName)
+                .setAddress(address)
                 .build();
     }
 }

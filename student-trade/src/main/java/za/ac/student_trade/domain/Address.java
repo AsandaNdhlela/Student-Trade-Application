@@ -15,7 +15,6 @@ import jakarta.persistence.CascadeType;
 public class Address {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long addressId;
 
     @Column(name = "street_number")
@@ -31,9 +30,9 @@ public class Address {
     @Column(name = "postal_code")
     protected int postalCode;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "residence_id")
-    protected Residence residence;
+//    @OneToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "residence_id")
+//    protected Residence residence;
 
     protected Address() {}
 
@@ -45,7 +44,6 @@ public class Address {
         this.city = builder.city;
         this.province = builder.province;
         this.postalCode = builder.postalCode;
-        this.residence = builder.residence;
     }
 
     public Long getAddressId() {
@@ -76,9 +74,6 @@ public class Address {
         return postalCode;
     }
 
-    public Residence getAddress() {
-        return residence;
-    }
 
     @Override
     public String toString() {
@@ -90,9 +85,9 @@ public class Address {
                 ", city='" + city + '\'' +
                 ", province='" + province + '\'' +
                 ", postalCode=" + postalCode +
-                ", address=" + residence +
                 '}';
     }
+
 
     public static class Builder {
         private Long addressId;
@@ -102,7 +97,6 @@ public class Address {
         private String city;
         private String province;
         private int postalCode;
-        private Residence residence;
 
         public Builder setAddressId(Long addressId) {
             this.addressId = addressId;
@@ -139,11 +133,6 @@ public class Address {
             return this;
         }
 
-        public Builder setResidence(Residence residence) {
-            this.residence = residence;
-            return this;
-        }
-
         public Builder builder(Address address) {
             this.addressId = address.getAddressId();
             this.streetNumber = address.getStreetNumber();
@@ -152,7 +141,6 @@ public class Address {
             this.city = address.getCity();
             this.province = address.getProvince();
             this.postalCode = address.getPostalCode();
-            this.residence = residence;
             return this;
         }
 

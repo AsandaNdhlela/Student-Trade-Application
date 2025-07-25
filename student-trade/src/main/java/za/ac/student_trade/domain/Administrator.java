@@ -57,22 +57,22 @@ public class Administrator {
         private String email;
         private String password;
 
-        public Builder adminId(Long adminId) {
+        public Builder setAdminId(Long adminId) {
             this.adminId = adminId;
             return this;
         }
 
-        public Builder username(String username) {
+        public Builder setUsername(String username) {
             this.username = username;
             return this;
         }
 
-        public Builder email(String email) {
+        public Builder setEmail(String email) {
             this.email = email;
             return this;
         }
 
-        public Builder password(String password) {
+        public Builder setPassword(String password) {
             this.password = password;
             return this;
         }

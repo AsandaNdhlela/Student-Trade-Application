@@ -25,7 +25,7 @@ public class Product {
     private Double price;
 
     @Column(name = "category")
-    private int productCategory;
+    private String productCategory;
 
     @Column(name = "availability")
     private boolean availabilityStatus;
@@ -76,7 +76,7 @@ public class Product {
         return price;
     }
 
-    public int getProductCategory() {
+    public String getProductCategory() {
         return productCategory;
     }
 
@@ -118,7 +118,7 @@ public class Product {
         private String productDescription;
         private String condition;
         private Double price;
-        private int productCategory;
+        private String productCategory;
         private boolean availabilityStatus;
         private String productImageUrl;
         private Student seller;
@@ -149,7 +149,7 @@ public class Product {
             return this;
         }
 
-        public Builder setProductCategory(int productCategory) {
+        public Builder setProductCategory(String productCategory) {
             this.productCategory = productCategory;
             return this;
         }

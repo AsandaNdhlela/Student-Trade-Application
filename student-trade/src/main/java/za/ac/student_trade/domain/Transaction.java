@@ -10,11 +10,23 @@ import java.time.LocalDateTime;
 public class Transaction {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long transactionId;
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private String transactionId;
 
     @Column(name = "transaction_date")
     private LocalDateTime transactionDate;
+
+    @Column(name = "image_of_product")
+    private String imageOfProduct;
+
+    @Column(name = "product_label")
+    private String productLabel;
+
+    @Column(name= "description")
+    private String productDescription;
+
+    @Column(name = "product_condition")
+    private String productCondition;
 
     @Column(name = "price")
     private double price;
@@ -32,14 +44,34 @@ public class Transaction {
 
     protected Transaction (Builder builder) {
         this.transactionId = builder.transactionId;
+        this.imageOfProduct = builder.imageOfProduct;
+        this.productLabel = builder.productLabel;
+        this.productDescription = builder.productDescription;
+        this.productCondition = builder.productCondition;
         this.transactionDate = builder.transactionDate;
         this.price = builder.price;
         this.product = builder.product;
         this.buyer = builder.buyer;
     }
 
-    public Long getTransactionId() {
+    public String getTransactionId() {
         return transactionId;
+    }
+
+    public String getImageOfProduct() {
+        return imageOfProduct;
+    }
+
+    public String getProductLabel() {
+        return productLabel;
+    }
+
+    public String getProductDescription() {
+        return productDescription;
+    }
+
+    public String getProductCondition() {
+        return productCondition;
     }
 
     public LocalDateTime getTransactionDate() {
@@ -70,14 +102,38 @@ public class Transaction {
     }
 
     public static class Builder {
-        private Long transactionId;
+        private String transactionId;
+        private String imageOfProduct;
+        private String productLabel;
+        private String productDescription;
+        private String productCondition;
         private LocalDateTime transactionDate;
         private double price;
         private Product product;
         private Student buyer;
 
-        public Builder setTransactionId(Long transactionId) {
+        public Builder setTransactionId(String transactionId) {
             this.transactionId = transactionId;
+            return this;
+        }
+
+        public Builder setImageOfProduct(String imageOfProduct) {
+            this.imageOfProduct = imageOfProduct;
+            return this;
+        }
+
+        public Builder setProductLabel(String productLabel) {
+            this.productLabel = productLabel;
+            return this;
+        }
+
+        public Builder setProductDescription(String productDescription) {
+            this.productDescription = productDescription;
+            return this;
+        }
+
+        public Builder setProductCondition(String productCondition) {
+            this.productCondition = productCondition;
             return this;
         }
 
@@ -101,8 +157,14 @@ public class Transaction {
             return this;
         }
 
+
+
         public Builder copy(Transaction transaction) {
             this.transactionId = transaction.transactionId;
+            this.imageOfProduct = transaction.imageOfProduct;
+            this.productLabel = transaction.productLabel;
+            this.productDescription = transaction.productDescription;
+            this.productCondition = transaction.productCondition;
             this.transactionDate = transaction.transactionDate;
             this.price = transaction.price;
             this.product = transaction.product;
@@ -112,6 +174,10 @@ public class Transaction {
 
         public Builder builder(Transaction transaction) {
             this.transactionId = transaction.getTransactionId();
+            this.imageOfProduct = transaction.getImageOfProduct();
+            this.productLabel = transaction.getProductLabel();
+            this.productDescription = transaction.getProductDescription();
+            this.productCondition = transaction.getProductCondition();
             this.transactionDate = transaction.getTransactionDate();
             this.price = transaction.getPrice();
             this.product = transaction.getProduct();

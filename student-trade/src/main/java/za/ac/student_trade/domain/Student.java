@@ -88,8 +88,8 @@ public class Student {
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
-                ", address=" + residence +
-                ", productForSale=" + productForSale +
+                ", address=" + residence + '\'' +
+                ", productForSale=" + productForSale + '\'' +
                 ", purchases=" + purchases +
                 '}';
     }

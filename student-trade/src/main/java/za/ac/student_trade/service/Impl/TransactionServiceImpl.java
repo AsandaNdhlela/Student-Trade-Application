@@ -11,6 +11,7 @@ import za.ac.student_trade.repository.TransactionRepository;
 import za.ac.student_trade.service.ITransactionService;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -62,5 +63,10 @@ public class TransactionServiceImpl implements ITransactionService {
     @Override
     public Transaction update(Transaction transaction) {
         return transactionRepository.save(transaction);
+    }
+
+    @Override
+    public List<Transaction> getAll() {
+        return List.of();
     }
 }

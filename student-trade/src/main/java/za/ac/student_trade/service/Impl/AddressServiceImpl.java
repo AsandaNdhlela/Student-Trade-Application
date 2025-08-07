@@ -23,6 +23,7 @@ public class AddressServiceImpl implements IService<Address, Long> {
 
     @Override
     public Address create(Address address) {
+        System.out.println("Saving Address with ID: " + address.getAddressId());
         return addressRepository.save(address);
     }
 
@@ -34,6 +35,11 @@ public class AddressServiceImpl implements IService<Address, Long> {
     @Override
     public Address update(Address address) {
         return addressRepository.save(address);
+    }
+
+    @Override
+    public List<Address> getAll() {
+        return List.of();
     }
 
 }

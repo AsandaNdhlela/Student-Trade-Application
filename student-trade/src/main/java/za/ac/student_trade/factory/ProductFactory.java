@@ -10,10 +10,7 @@ public class ProductFactory {
     public static Product create(String productName, String productDescription, String condition, Double price, String productCategory,
                                  boolean availabilityStatus, String productImageUrl, Student seller) {
 
-//        Long productId = new Random().nextLong();
-
         return new Product.Builder()
-//                .setProductId(productId)
                 .setProductName(productName)
                 .setProductDescription(productDescription)
                 .setCondition(condition)

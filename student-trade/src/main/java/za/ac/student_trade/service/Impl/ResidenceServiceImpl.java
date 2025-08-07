@@ -34,4 +34,9 @@ public class ResidenceServiceImpl implements IService <Residence, Long>{
         return  residenceRepository.save(residence);
     }
 
+    @Override
+    public List<Residence> getAll() {
+        return List.of();
+    }
+
 }

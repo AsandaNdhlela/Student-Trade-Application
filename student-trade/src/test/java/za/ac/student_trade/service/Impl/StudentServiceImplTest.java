@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Configuration;
 import za.ac.student_trade.domain.Address;
 import za.ac.student_trade.domain.Residence;
 import za.ac.student_trade.domain.Student;
@@ -27,17 +28,13 @@ class StudentServiceImplTest {
     @Autowired
     private ResidenceServiceImpl residenceServiceImpl;
 
-    private static Residence residence;
-    private static Address address;
-    private static Student student;
+    private Residence residence;
+    private Address address;
+    private Student student;
 
     @BeforeEach
     void setUp() {
         address = AddressFactory.createAddress("22","Brackeer", "Phola Park", "Piet Retief", "Mpumalanga",2380);
-
-        residence = ResidenceFactory.createResidence("President House", "222", 2,"South Point", address);
-
-        student = StudentFactory.createStudent("Asanda", "Ndhlela", "asandat@gmail.com","asanda123", residence);
 
     }
     @Test
@@ -47,12 +44,16 @@ class StudentServiceImplTest {
         assertNotNull(address1);
 
         //saving residence
+        residence = ResidenceFactory.createResidence("President House", "222", 2,"South Point", address1);
+
 
         Residence residence1 = residenceServiceImpl.create(residence);
         assertNotNull(residence1);
         System.out.println(residence1.toString());
 
         //saving student
+        student = StudentFactory.createStudent("Nkululeko", "Ndlovu", "asandat@gmail.com","asanda123", residence1);
+
         Student created = studentServiceImpl.create(student);
         assertNotNull(created);
         System.out.println(created.toString());

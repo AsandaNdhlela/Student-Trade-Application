@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 @Table(name ="residence")
 public class Residence {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long residenceId;
 
     @Column(name = "residence_name")

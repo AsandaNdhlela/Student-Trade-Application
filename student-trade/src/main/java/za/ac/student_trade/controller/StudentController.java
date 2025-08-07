@@ -7,10 +7,12 @@ import za.ac.student_trade.domain.Student;
 import za.ac.student_trade.service.IService;
 import za.ac.student_trade.service.Impl.StudentServiceImpl;
 
+import java.util.List;
+
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/api/students")
 public class StudentController {
-
 
     private StudentServiceImpl service;
 
@@ -33,6 +35,16 @@ public class StudentController {
     @PutMapping("/update")
     public Student update(@RequestBody Student student) {
         return this.service.update(student);
+    }
+
+    @GetMapping("/login")
+    public List<Student> login(@RequestParam String email, @RequestParam String password) {
+        return this.service.findByEmailAndPassword(email, password);
+    }
+
+    @GetMapping("/getAllStudents")
+    public List<Student> getAllStudents() {
+        return service.getAll();
     }
 
     //<< -- END -- >>

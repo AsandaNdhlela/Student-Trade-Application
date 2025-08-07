@@ -2,6 +2,8 @@ package za.ac.student_trade.domain;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "administrator")
 public class Administrator {
@@ -19,6 +21,10 @@ public class Administrator {
 
     @Column(name = "password")
     private String password;
+
+    @OneToMany(mappedBy = "reviewedBy")
+    private List<PendingProducts> reviewedRequests;
+
 
     public Administrator() {
     }
@@ -41,6 +47,10 @@ public class Administrator {
         return password;
     }
 
+    public List<PendingProducts> getReviewedRequests() {
+        return reviewedRequests;
+    }
+
     @Override
     public String toString() {
         return "Administrator{" +
@@ -48,6 +58,7 @@ public class Administrator {
                 ", username='" + username + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
+                ", reviewedRequests=" + reviewedRequests +
                 '}';
     }
 
@@ -56,6 +67,7 @@ public class Administrator {
         private String username;
         private String email;
         private String password;
+        private List<PendingProducts> reviewedRequests;
 
         public Builder setAdminId(Long adminId) {
             this.adminId = adminId;
@@ -77,11 +89,17 @@ public class Administrator {
             return this;
         }
 
+        public Builder setReviewedRequests(List<PendingProducts> reviewedRequests) {
+            this.reviewedRequests = reviewedRequests;
+            return this;
+        }
+
         public Builder copy(Administrator administrator) {
             this.adminId = administrator.adminId;
             this.username = administrator.username;
             this.email = administrator.email;
             this.password = administrator.password;
+            this.reviewedRequests = administrator.reviewedRequests;
             return this;
         }
 
@@ -90,6 +108,7 @@ public class Administrator {
             this.username = admin.getUsername();
             this.email = admin.getEmail();
             this.password = admin.getPassword();
+            this.reviewedRequests = admin.getReviewedRequests();
             return this;
         }
 

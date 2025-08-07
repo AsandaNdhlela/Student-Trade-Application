@@ -15,6 +15,7 @@ import jakarta.persistence.CascadeType;
 public class Address {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long addressId;
 
     @Column(name = "street_number")

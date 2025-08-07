@@ -1,17 +1,15 @@
 package za.ac.student_trade.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import lombok.Builder;
 
 @Entity
-@Table(name = "product")
-public class Product {
+@Table(name = "pending_request")
+public class PendingProducts {
 
     @Id
-    @Column(name = "product_id")
+    @Column(name = "request_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long productId;
+    private Long requestId;
 
     @Column(name = "product_name")
     private String productName;
@@ -20,7 +18,7 @@ public class Product {
     private String productDescription;
 
     @Column(name = "product_condition")
-    private String condition;
+    private String productCondition;
 
     @Column(name = "price")
     private Double price;
@@ -34,33 +32,35 @@ public class Product {
     @Column(name = "product_image")
     private String productImageUrl;
 
+    @Column(name = "approval_status")
+    private String approvalStatus; // PENDING / APPROVED / DECLINED
+
     @ManyToOne
-    @JoinColumn(name = "seller_id")
-//    @JsonIgnoreProperties({"email", "residence", "password", "address", "productForSale"})
-    @JsonIgnoreProperties({"productForSale", "purchases"})
-    private Student seller;
+    @JoinColumn(name = "requested_by", nullable = false)
+    private Student submittedBy;
 
-    @OneToOne(mappedBy = "product")
-    private Transaction transaction;
+    @ManyToOne
+    @JoinColumn(name = "reviewed_by")
+    private Administrator reviewedBy;
 
-    public Product() {
-    }
+    public PendingProducts() {}
 
-    protected Product(Builder builder) {
-        this.productId = builder.productId;
+    protected PendingProducts(Builder builder) {
+        this.requestId = builder.requestId;
         this.productName = builder.productName;
         this.productDescription = builder.productDescription;
-        this.condition = builder.condition;
+        this.productCondition = builder.productCondition;
         this.price = builder.price;
         this.productCategory = builder.productCategory;
         this.availabilityStatus = builder.availabilityStatus;
         this.productImageUrl = builder.productImageUrl;
-        this.seller = builder.seller;
-        this.transaction = builder.transaction;
+        this.approvalStatus = builder.approvalStatus;
+        this.submittedBy = builder.submittedBy;
+        this.reviewedBy = builder.reviewedBy;
     }
 
-    public Long getProductId() {
-        return productId;
+    public Long getRequestId() {
+        return requestId;
     }
 
     public String getProductName() {
@@ -71,8 +71,8 @@ public class Product {
         return productDescription;
     }
 
-    public String getCondition() {
-        return condition;
+    public String getProductCondition() {
+        return productCondition;
     }
 
     public Double getPrice() {
@@ -91,44 +91,50 @@ public class Product {
         return productImageUrl;
     }
 
-    public Student getSeller() {
-        return seller;
+    public String getApprovalStatus() {
+        return approvalStatus;
     }
 
-    public Transaction getTransaction() {
-        return transaction;
+    public Student getSubmittedBy() {
+        return submittedBy;
+    }
+
+    public Administrator getReviewedBy() {
+        return reviewedBy;
     }
 
     @Override
     public String toString() {
-        return "Product{" +
-                "productId=" + productId +
+        return "PendingProducts{" +
+                "requestId=" + requestId +
                 ", productName='" + productName + '\'' +
                 ", productDescription='" + productDescription + '\'' +
-                ", condition='" + condition + '\'' +
+                ", condition='" + productCondition + '\'' +
                 ", price=" + price +
-                ", productCategory=" + productCategory +
+                ", productCategory='" + productCategory + '\'' +
                 ", availabilityStatus=" + availabilityStatus +
                 ", productImageUrl='" + productImageUrl + '\'' +
-                ", seller=" + seller +
-                ", transaction=" + transaction +
+                ", approvalStatus='" + approvalStatus + '\'' +
+                ", submittedBy=" + submittedBy +
+                ", reviewedBy=" + reviewedBy +
                 '}';
     }
 
     public static class Builder {
-        private Long productId;
+        private Long requestId;
         private String productName;
         private String productDescription;
-        private String condition;
+        private String productCondition;
         private Double price;
         private String productCategory;
         private boolean availabilityStatus;
         private String productImageUrl;
-        private Student seller;
-        private Transaction transaction;
+        private String approvalStatus;
+        private Student submittedBy;
+        private Administrator reviewedBy;
 
-        public Builder setProductId(Long productId) {
-            this.productId = productId;
+        public Builder setRequestId(Long requestId) {
+            this.requestId = requestId;
             return this;
         }
 
@@ -142,8 +148,8 @@ public class Product {
             return this;
         }
 
-        public Builder setCondition(String condition) {
-            this.condition = condition;
+        public Builder setProductCondition(String productCondition) {
+            this.productCondition = productCondition;
             return this;
         }
 
@@ -167,46 +173,38 @@ public class Product {
             return this;
         }
 
-        public Builder setSeller(Student seller) {
-            this.seller = seller;
+        public Builder setApprovalStatus(String approvalStatus) {
+            this.approvalStatus = approvalStatus;
             return this;
         }
 
-        public Builder setTransaction(Transaction transaction) {
-            this.transaction = transaction;
+        public Builder setSubmittedBy(Student submittedBy) {
+            this.submittedBy = submittedBy;
             return this;
         }
 
-        public Builder copy(Product product) {
-            this.productId = product.getProductId();
-            this.productName = product.getProductName();
-            this.productDescription = product.getProductDescription();
-            this.condition = product.getCondition();
-            this.price = product.getPrice();
-            this.productCategory = product.getProductCategory();
-            this.availabilityStatus = product.isAvailabilityStatus();
-            this.productImageUrl = product.getProductImageUrl();
-            this.seller = product.getSeller();
-            this.transaction = product.getTransaction();
+        public Builder setReviewedBy(Administrator reviewedBy) {
+            this.reviewedBy = reviewedBy;
             return this;
         }
 
-        public Builder builder(Product product) {
-            this.productId = product.getProductId();
-            this.productName = product.getProductName();
-            this.productDescription = product.getProductDescription();
-            this.condition = product.getCondition();
-            this.price = product.getPrice();
-            this.productCategory = product.getProductCategory();
-            this.availabilityStatus = product.isAvailabilityStatus();
-            this.productImageUrl = product.getProductImageUrl();
-            this.seller = product.getSeller();
-            this.transaction = product.getTransaction();
+        public Builder copy(PendingProducts pendingProducts) {
+            this.requestId = pendingProducts.requestId;
+            this.productName = pendingProducts.productName;
+            this.productDescription = pendingProducts.productDescription;
+            this.productCondition = pendingProducts.productCondition;
+            this.price = pendingProducts.price;
+            this.productCategory = pendingProducts.productCategory;
+            this.availabilityStatus = pendingProducts.availabilityStatus;
+            this.productImageUrl = pendingProducts.productImageUrl;
+            this.approvalStatus = pendingProducts.approvalStatus;
+            this.submittedBy = pendingProducts.submittedBy;
+            this.reviewedBy = pendingProducts.reviewedBy;
             return this;
         }
 
-        public Product build() {
-            return new Product(this);
+        public PendingProducts build() {
+            return new PendingProducts(this);
         }
     }
 }

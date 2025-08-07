@@ -33,6 +33,9 @@ public class Student {
     @OneToMany(mappedBy = "buyer")
     protected List<Transaction> purchases;
 
+    @OneToMany(mappedBy = "submittedBy")
+    private List<PendingProducts> requestSent;
+
 
     protected Student() {}
 
@@ -80,6 +83,10 @@ public class Student {
         return purchases;
     }
 
+    public List<PendingProducts> getRequestSent() {
+        return requestSent;
+    }
+
     @Override
     public String toString() {
         return "Student{" +
@@ -90,14 +97,10 @@ public class Student {
                 ", password='" + password + '\'' +
                 ", address=" + residence + '\'' +
                 ", productForSale=" + productForSale + '\'' +
-                ", purchases=" + purchases +
+                ", purchases=" + purchases + '\'' +
+                ", requestSent=" + requestSent +
                 '}';
     }
-
-//    public void setStudentId(String studentId) {
-//        this.studentId = studentId;
-//    }
-
 
     public static class Builder {
         private String studentId;
@@ -108,6 +111,7 @@ public class Student {
         private Residence residence;
         private List<Product> productForSale;
         private List<Transaction> purchases;
+        private List<PendingProducts> requestSent;
 
         public Builder setStudentId(String studentId) {
             this.studentId = studentId;
@@ -149,6 +153,11 @@ public class Student {
             return this;
         }
 
+        public Builder setRequestSent(List<PendingProducts> requestSent) {
+            this.requestSent = requestSent;
+            return this;
+        }
+
         public Builder builder(Student student) {
             this.studentId = student.getStudentId();
             this.firstName = student.getFirstName();
@@ -158,6 +167,7 @@ public class Student {
             this.residence = student.getResidence();
             this.productForSale = student.getProductForSale();
             this.purchases = student.getPurchases();
+            this.requestSent = student.getRequestSent();
             return this;
         }
 
@@ -170,6 +180,7 @@ public class Student {
             this.residence = student.residence;
             this.productForSale = student.productForSale;
             this.purchases = student.purchases;
+            this.requestSent = student.requestSent;
             return this;
         }
 

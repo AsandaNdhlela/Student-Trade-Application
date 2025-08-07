@@ -9,9 +9,9 @@ import java.util.Random;
 public class ResidenceFactory {
     public static Residence createResidence(String residenceName, String roomNumber, int floorNumber, String buildingName, Address address) {
 
-        Long residenceId = new Random().nextLong();
+//        Long residenceId = new Random().nextLong();
         return new Residence.Builder()
-                .setResidenceId(residenceId)
+//                .setResidenceId(residenceId)
                 .setResidenceName(residenceName)
                 .setRoomNumber(roomNumber)
                 .setFloorNumber(floorNumber)
